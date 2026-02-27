@@ -27,7 +27,7 @@ var handlers = map[string]func(s *discordgo.Session, i *discordgo.InteractionCre
 			msg += "Minute: %d\n"
 		}
 
-		if option, ok := optionsMap["AM/PM"]; ok {
+		if option, ok := optionsMap["am-pm"]; ok {
 			margs = append(margs, option.StringValue())
 			msg += "AM/PM: %s"
 		}

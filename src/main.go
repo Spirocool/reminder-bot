@@ -55,7 +55,7 @@ func main() {
 	// 	log.Fatalf("Couldn't fetch registered commands: %v", err)
 	// }
 
-	fmt.Printf("Removing Commands...")
+	fmt.Println("Removing Commands...")
 	for _, v := range registeredCommands {
 		err := discord.ApplicationCommandDelete(discord.State.User.ID, "", v.ID)
 		if err != nil {

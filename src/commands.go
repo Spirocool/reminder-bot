@@ -26,14 +26,6 @@ var commands = []*discordgo.ApplicationCommand{
 				MaxValue:    59,
 				Required:    true,
 			},
-			// {
-			// 	Name:        "test",
-			// 	Description: "test value",
-			// 	Type:        discordgo.ApplicationCommandOptionInteger,
-			// 	MinValue:    &integerOptionMinValueMinute,
-			// 	MaxValue:    59,
-			// 	Required:    true,
-			// },
 			{
 				Name:        "am-pm",
 				Description: "AM or PM for reminder",
