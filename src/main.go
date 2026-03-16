@@ -9,6 +9,8 @@ import (
 
 	"github.com/bwmarrin/discordgo"
 	"github.com/joho/godotenv"
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
 )
 
 func main() {
@@ -24,9 +26,17 @@ func main() {
 		log.Fatalf("Couldn't create discord session: %s", err)
 	}
 
+	fmt.Println("Connecting to db...")
+	db, err := gorm.Open(sqlite.Open("reminders.db"), &gorm.Config{})
+	if err != nil {
+		log.Fatalf("failed to connect to database")
+	}
+
+	db.AutoMigrate(&TimeReminder{})
+
 	discord.AddHandler(func(s *discordgo.Session, i *discordgo.InteractionCreate) {
 		if handler, ok := handlers[i.ApplicationCommandData().Name]; ok {
-			handler(s, i)
+			handler(s, i, db)
 		}
 	})
 
@@ -46,6 +56,7 @@ func main() {
 	}
 
 	fmt.Println("Bot is online...")
+
 	sc := make(chan os.Signal, 1)
 	signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt)
 	<-sc
